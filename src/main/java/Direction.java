@@ -11,6 +11,6 @@ public enum Direction {
     }
 
     public Direction previous() {
-        return values[(this.ordinal() - 1) % values.length];
+        return values[(values.length + (this.ordinal() - 1)) % values.length];
     }
 }

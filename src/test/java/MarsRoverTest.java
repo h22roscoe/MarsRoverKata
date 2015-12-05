@@ -8,14 +8,13 @@ import static org.junit.Assert.assertNotEquals;
  */
 public class MarsRoverTest {
 
-    private final Position givenPosition = new Position(0, 0);
     private final Direction givenDirection = Direction.NORTH;
     private final MarsRover kata =
-            new MarsRover(givenDirection, givenPosition);
+            new MarsRover(givenDirection, new Position(0, 0));
 
     @Test
     public void roverStartsAtGivenPosition() {
-        assertEquals(kata.getPosition(), givenPosition);
+        assertEquals(kata.getPosition(), new Position(0, 0));
     }
 
     @Test
@@ -36,7 +35,8 @@ public class MarsRoverTest {
     public void forwardInstructionChangesPosition() {
         kata.move("F");
 
-        assertNotEquals(kata.getPosition(), givenPosition);
+        // because givenDirection = NORTH
+        assertEquals(kata.getPosition(), new Position(0, 1));
     }
 
     @Test
@@ -54,6 +54,21 @@ public class MarsRoverTest {
 
         kata.move("B");
 
+        // because givenDirection = NORTH
         assertEquals(kata.getPosition(), new Position(0, 99));
+    }
+
+    @Test
+    public void roverCanMoveAfterChangingDirection() {
+        kata.move("RFF");
+
+        assertEquals(kata.getPosition(), new Position(2, 0));
+    }
+
+    @Test
+    public void roverCanMoveInACircleAndEndUpBackAtGivenPosition() {
+        kata.move("FFRFFRFFRFFR");
+
+        roverStartsAtGivenPosition();
     }
 }
