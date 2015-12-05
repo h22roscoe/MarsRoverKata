@@ -4,11 +4,13 @@ import java.util.List;
 /**
  * Created by har14 on 05/12/15.
  */
-public class MarsRover {
+public class MarsRover implements Rover {
+    Grid grid;
     Position position;
     Direction direction;
 
-    public MarsRover(Direction direction, Position position) {
+    public MarsRover(Grid grid, Direction direction, Position position) {
+        this.grid = grid;
         this.direction = direction;
         this.position = position;
     }
@@ -31,7 +33,11 @@ public class MarsRover {
         }
 
         for (Instruction instr : instructionList) {
-            this.direction = instr.apply(direction, position);
+            try {
+                this.direction = instr.apply(grid, direction, position);
+            } catch (ObstaclePresentException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 

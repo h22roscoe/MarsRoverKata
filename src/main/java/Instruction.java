@@ -4,19 +4,19 @@
 public enum Instruction {
     FORWARDS {
         @Override
-        public Direction apply(Direction direction, Position position) {
+        public Direction apply(Grid grid, Direction direction, Position position) {
             switch (direction) {
                 case NORTH:
-                    position.incrementY();
+                    position.incrementY(grid);
                     return Direction.NORTH;
                 case EAST:
-                    position.incrementX();
+                    position.incrementX(grid);
                     return Direction.EAST;
                 case SOUTH:
-                    position.decrementY();
+                    position.decrementY(grid);
                     return Direction.SOUTH;
                 case WEST:
-                    position.decrementX();
+                    position.decrementX(grid);
                     return Direction.WEST;
                 default:
                     throw new UnsupportedOperationException();
@@ -25,19 +25,19 @@ public enum Instruction {
     },
     BACKWARDS {
         @Override
-        public Direction apply(Direction direction, Position position) {
+        public Direction apply(Grid grid, Direction direction, Position position) {
             switch (direction) {
                 case NORTH:
-                    position.decrementY();
+                    position.decrementY(grid);
                     return Direction.NORTH;
                 case EAST:
-                    position.decrementX();
+                    position.decrementX(grid);
                     return Direction.EAST;
                 case SOUTH:
-                    position.incrementY();
+                    position.incrementY(grid);
                     return Direction.SOUTH;
                 case WEST:
-                    position.incrementX();
+                    position.incrementX(grid);
                     return Direction.WEST;
                 default:
                     throw new UnsupportedOperationException();
@@ -46,13 +46,13 @@ public enum Instruction {
     },
     LEFT {
         @Override
-        public Direction apply(Direction direction, Position position) {
+        public Direction apply(Grid grid, Direction direction, Position position) {
             return direction.previous();
         }
     },
     RIGHT {
         @Override
-        public Direction apply(Direction direction, Position position) {
+        public Direction apply(Grid grid, Direction direction, Position position) {
             return direction.next();
         }
     };
@@ -69,5 +69,5 @@ public enum Instruction {
         return false;
     }
 
-    public abstract Direction apply(Direction direction, Position position);
+    public abstract Direction apply(Grid grid, Direction direction, Position position);
 }
