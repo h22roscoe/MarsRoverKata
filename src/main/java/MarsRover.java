@@ -5,11 +5,16 @@ import java.util.List;
  * Created by har14 on 05/12/15.
  */
 public class MarsRover implements Rover {
+    Reporter reporter;
     Grid grid;
     Position position;
     Direction direction;
 
-    public MarsRover(Grid grid, Direction direction, Position position) {
+    public MarsRover(Reporter reporter,
+                     Grid grid,
+                     Direction direction,
+                     Position position) {
+        this.reporter = reporter;
         this.grid = grid;
         this.direction = direction;
         this.position = position;
@@ -36,7 +41,7 @@ public class MarsRover implements Rover {
             try {
                 this.direction = instr.apply(grid, direction, position);
             } catch (ObstaclePresentException e) {
-                System.out.println(e.getMessage());
+                reporter.report(e.getMessage());
             }
         }
     }
