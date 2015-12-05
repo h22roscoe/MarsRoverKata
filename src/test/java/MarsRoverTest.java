@@ -22,14 +22,28 @@ public class MarsRoverTest {
                     {false, false, false},
                     {false, false, false}
             };
+    private final boolean[][] testGridArray2 =
+            {
+                    {false, false, false},
+                    {false, false, false},
+                    {false, false, false}
+            };
+    private final Grid testGrid2 = new Grid(testGridArray2);
     private final Grid testGrid = new Grid(testGridArray);
     private final Grid grid = new Grid();
     private final Direction givenDirection = Direction.NORTH;
     private final MarsRover testObstacleKata =
             new MarsRover(reporter, testGrid, Direction.NORTH,
                     new Position(0, 0));
+    private final MarsRover testObstacleKata2 =
+            new MarsRover(new PrintingReporter(), testGrid, Direction.NORTH,
+                    new Position(0, 0));
+    private final MarsRover testObstacleKata3 =
+            new MarsRover(new PrintingReporter(), testGrid2, Direction.NORTH,
+                    new Position(0, 0));
     private final MarsRover kata =
-            new MarsRover(reporter, grid, givenDirection, new Position(0, 0));
+            new MarsRover(new PrintingReporter(),
+                    grid, givenDirection, new Position(0, 0));
 
     @Test
     public void roverStartsAtGivenPosition() {
@@ -101,5 +115,17 @@ public class MarsRoverTest {
         testObstacleKata.move("RFLFLF");
 
         assertEquals(testObstacleKata.getPosition(), new Position(1, 1));
+    }
+
+    @Test
+    public void roverCanMoveBackwardsAfterChangingDirection() {
+        testObstacleKata2.move("BLBLBLBLF");
+
+        assertEquals(testObstacleKata2.getPosition(), new Position(0, 0));
+    }
+
+    @Test
+    public void roverCanWrapAroundGridMoreThanOnce() {
+        testObstacleKata3.move("FFFFFFFFRBBBBBBBBBRFFFFFFFFFRFFFFFFFFFF");
     }
 }
